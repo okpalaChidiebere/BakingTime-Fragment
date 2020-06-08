@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.bakingtime.Model.BakingStep;
 import com.example.android.bakingtime.R;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -34,6 +35,10 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -43,6 +48,9 @@ public class FragmentRecipePlayerView extends Fragment {
     private static final String STATE_RESUME_WINDOW = "resumeWindow";
     private static final String STATE_RESUME_POSITION = "resumePosition";
     private static final String STATE_PLAYER_FULLSCREEN = "playerFullscreen";
+    // Final Strings to store state information about the list of images and list index
+    public static final String BAKING_RECIPE_STEPS_LIST = "baking_recipe_steps_list";
+    public static final String LIST_INDEX = "list_index";
 
     private PlayerView mPlayerView;
     private MediaSource mVideoSource;
@@ -58,6 +66,9 @@ public class FragmentRecipePlayerView extends Fragment {
 
     private View rootView;
     /*End exo player used variables*/
+
+    private List<BakingStep> mRecipeSteps;
+    private int mListIndex;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the fragment
@@ -76,17 +87,30 @@ public class FragmentRecipePlayerView extends Fragment {
             mResumeWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW);
             mResumePosition = savedInstanceState.getLong(STATE_RESUME_POSITION);
             mExoPlayerFullscreen = savedInstanceState.getBoolean(STATE_PLAYER_FULLSCREEN);
+            mRecipeSteps = (List<BakingStep>) savedInstanceState.getSerializable(BAKING_RECIPE_STEPS_LIST);
+            mListIndex = savedInstanceState.getInt(LIST_INDEX);
         }
 
         rootView = inflater.inflate(R.layout.fragment_recipe_player_view, container, false);
 
         final TextView recipeDescription = (TextView) rootView.findViewById(R.id.tv_recipe_step_instruction);
-        recipeDescription.setText("bbbbdddvddfdfdfdvdsvsdvf");
+        recipeDescription.setText(mRecipeSteps.get(mListIndex).getDescription());
 
         // Return the rootView
         return rootView;
     }
 
+
+    // Setter methods for keeping track of the list images this fragment can display and which image
+    // in the list is currently being displayed
+
+    public void setRecipeStepsList(List<BakingStep> recipeSteps) {
+        mRecipeSteps = recipeSteps;
+    }
+
+    public void setListIndex(int index) {
+        mListIndex = index;
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -94,6 +118,8 @@ public class FragmentRecipePlayerView extends Fragment {
         outState.putInt(STATE_RESUME_WINDOW, mResumeWindow);
         outState.putLong(STATE_RESUME_POSITION, mResumePosition);
         outState.putBoolean(STATE_PLAYER_FULLSCREEN, mExoPlayerFullscreen);
+        outState.putSerializable(BAKING_RECIPE_STEPS_LIST, (Serializable) mRecipeSteps);
+        outState.putInt(LIST_INDEX, mListIndex);
 
         super.onSaveInstanceState(outState);
     }
@@ -189,17 +215,17 @@ public class FragmentRecipePlayerView extends Fragment {
         if (mPlayerView == null) {
 
             mPlayerView = (PlayerView) rootView.findViewById(R.id.exoplayer);
-            //mediaFrame = (FrameLayout) rootView.findViewById(R.id.main_media_frame);
+            mediaFrame = (FrameLayout) rootView.findViewById(R.id.main_media_frame_fragment);
 
             //Hide the Player View when there is no video url from API
-            /*if(!mSteps.getVideoURL().equals("")){
+            if(!mRecipeSteps.get(mListIndex).getVideoURL().equals("")){
                 mediaFrame.setVisibility(View.VISIBLE);
-            }*/
+            }
 
             initFullscreenDialog();
             initFullscreenButton();
 
-            String streamUrl = "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4";
+            String streamUrl = mRecipeSteps.get(mListIndex).getVideoURL(); //eg "https://d17h27t6h515a5.cloudfront.net/topher/2017/April/58ffd974_-intro-creampie/-intro-creampie.mp4"
             String userAgent = Util.getUserAgent(getContext(), getContext().getApplicationInfo().packageName);
             DefaultHttpDataSourceFactory httpDataSourceFactory = new DefaultHttpDataSourceFactory(userAgent, null, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, true);
             DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(getContext(), null, httpDataSourceFactory);
