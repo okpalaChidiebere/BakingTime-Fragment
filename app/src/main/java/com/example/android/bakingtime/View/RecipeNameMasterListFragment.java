@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.bakingtime.Model.BakingFood;
+import com.example.android.bakingtime.Model.BakingStep;
 import com.example.android.bakingtime.R;
 import com.example.android.bakingtime.Utils.ApiClient;
 import com.example.android.bakingtime.Utils.ApiInterface;
@@ -22,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RecipeNameMasterListFragment extends Fragment {
+public class RecipeNameMasterListFragment extends Fragment implements RecipeStepAdapter.RecipeStepAdapterOnClickHandler{
 
     private static final String TAG = "MasterListFragment";
     ApiInterface apiInterface;
@@ -33,10 +34,35 @@ public class RecipeNameMasterListFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager_Ingredients;
     private RecyclerView.LayoutManager layoutManager_recipeSteps;
     private Context context;
-    //private RecipeStepAdapter.RecipeStepAdapterOnClickHandler handler;
+    private RecipeStepAdapter.RecipeStepAdapterOnClickHandler handler;
 
     private int mFoodTagID;
     List<BakingFood> list = new ArrayList<>();
+
+
+    // Define a new interface OnRecipeStepDescriptionClickListener that triggers a callback in the host activity
+    OnRecipeStepDescriptionClickListener mCallback;
+
+    // OnRecipeStepDescriptionClickListener interface, calls a method in the host activity named onRecipeStepDescriptionSelected
+    public interface OnRecipeStepDescriptionClickListener {
+        void onRecipeStepDescriptionSelected(int position);
+    }
+
+
+    // Override onAttach to make sure that the container activity has implemented the callback
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the host activity has implemented the callback interface
+        // If not, it throws an exception
+        try {
+            mCallback = (OnRecipeStepDescriptionClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnRecipeStepDescriptionClickListener");
+        }
+    }
 
 
     /**
@@ -69,7 +95,7 @@ public class RecipeNameMasterListFragment extends Fragment {
         mRecyclerView_recipeSteps.setLayoutManager(layoutManager_recipeSteps);
 
         context = getContext();
-        //handler = getContext();
+        handler = this;
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
@@ -80,7 +106,7 @@ public class RecipeNameMasterListFragment extends Fragment {
 
                 list = response.body();
                 foodIngredientAdapter = new FoodIngredientAdapter(list.get(0).getIngredients());
-                recipeStepAdapter = new RecipeStepAdapter(list.get(0).getSteps());
+                recipeStepAdapter = new RecipeStepAdapter(list.get(0).getSteps(), handler);
 
                 mRecyclerView_ingredients.setAdapter(foodIngredientAdapter);
                 mRecyclerView_recipeSteps.setAdapter(recipeStepAdapter);
@@ -94,5 +120,14 @@ public class RecipeNameMasterListFragment extends Fragment {
 
         // Return the rootView
         return rootView;
+    }
+
+    @Override
+    public void onClick(BakingStep recipeSteps) {
+
+        int bakingStepID = recipeSteps.getId();
+
+        // Trigger the callback method and pass in the position that was clicked
+        mCallback.onRecipeStepDescriptionSelected(bakingStepID);
     }
 }

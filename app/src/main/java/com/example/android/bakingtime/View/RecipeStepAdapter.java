@@ -17,27 +17,27 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.RecipeStepAdapterViewHolder>{
 
     private List<BakingStep> mSteps;
-    //private final RecipeStepAdapterOnClickHandler mClickHandler;
+    private final RecipeStepAdapterOnClickHandler mClickHandler;
 
-    /*public interface RecipeStepAdapterOnClickHandler {
+    public interface RecipeStepAdapterOnClickHandler {
         void onClick(BakingStep recipeSteps);
-    }*/
+    }
 
-    /*public RecipeStepAdapter(List<BakingStep> steps, RecipeStepAdapterOnClickHandler clickHandler){
+    public RecipeStepAdapter(List<BakingStep> steps, RecipeStepAdapterOnClickHandler clickHandler){
         this.mSteps = steps;
         this.mClickHandler = clickHandler;
-    }*/
-
-    public RecipeStepAdapter(List<BakingStep> steps){
-        this.mSteps = steps;
     }
+
+    /*public RecipeStepAdapter(List<BakingStep> steps){
+        this.mSteps = steps;
+    }*/
 
     /*public void setAdapter(List<Steps> data){
         this.mSteps = data;
     }*/
 
-    //public class RecipeStepAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    public class RecipeStepAdapterViewHolder extends RecyclerView.ViewHolder{
+    public class RecipeStepAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    //public class RecipeStepAdapterViewHolder extends RecyclerView.ViewHolder{
         public final TextView mRecipeSteps;
 
         public RecipeStepAdapterViewHolder(View view){
@@ -45,15 +45,15 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
 
             mRecipeSteps = (TextView) view.findViewById(R.id.tv_foodRecipeStep);
 
-            //view.setOnClickListener(this);
+            view.setOnClickListener(this);
         }
 
-       /* @Override
+        @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             BakingStep recipeSteps = mSteps.get(adapterPosition);
             mClickHandler.onClick(recipeSteps);
-        }*/
+        }
     }
 
     @NonNull
