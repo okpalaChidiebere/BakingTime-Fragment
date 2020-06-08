@@ -19,6 +19,12 @@ public class BakingStep implements Serializable {
         this.thumbnailURL = thumbnailURL;
     }
 
+    public BakingStep(String description, String videoURL, String thumbnailURL) {
+        this.description = description;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+    }
+
     public int getId() {
         return id;
     }

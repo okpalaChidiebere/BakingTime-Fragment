@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.android.bakingtime.Model.BakingFood;
 import com.example.android.bakingtime.Model.BakingStep;
+import com.example.android.bakingtime.Model.Ingredient;
 import com.example.android.bakingtime.R;
 import com.example.android.bakingtime.Utils.ApiClient;
 import com.example.android.bakingtime.Utils.ApiInterface;
@@ -38,6 +40,8 @@ public class RecipeNameMasterListFragment extends Fragment implements RecipeStep
 
     private int mFoodTagID;
     List<BakingFood> list = new ArrayList<>();
+    List<BakingStep> steplist = new ArrayList<>();
+    List<Ingredient> ingredient = new ArrayList<>();
 
 
     // Define a new interface OnRecipeStepDescriptionClickListener that triggers a callback in the host activity
@@ -45,7 +49,7 @@ public class RecipeNameMasterListFragment extends Fragment implements RecipeStep
 
     // OnRecipeStepDescriptionClickListener interface, calls a method in the host activity named onRecipeStepDescriptionSelected
     public interface OnRecipeStepDescriptionClickListener {
-        void onRecipeStepDescriptionSelected(int position);
+        void onRecipeStepDescriptionSelected(int position, List<BakingStep> recipeSteps);
     }
 
 
@@ -105,8 +109,10 @@ public class RecipeNameMasterListFragment extends Fragment implements RecipeStep
             public void onResponse(Call<List<BakingFood>> call, Response<List<BakingFood>> response) {
 
                 list = response.body();
-                foodIngredientAdapter = new FoodIngredientAdapter(list.get(0).getIngredients());
-                recipeStepAdapter = new RecipeStepAdapter(list.get(0).getSteps(), handler);
+                steplist = list.get(0).getSteps();
+                ingredient = list.get(0).getIngredients();
+                foodIngredientAdapter = new FoodIngredientAdapter(ingredient);
+                recipeStepAdapter = new RecipeStepAdapter(steplist, handler);
 
                 mRecyclerView_ingredients.setAdapter(foodIngredientAdapter);
                 mRecyclerView_recipeSteps.setAdapter(recipeStepAdapter);
@@ -127,7 +133,9 @@ public class RecipeNameMasterListFragment extends Fragment implements RecipeStep
 
         int bakingStepID = recipeSteps.getId();
 
+        //BakingStep temRecipeSteps = new BakingStep(recipeSteps.getDescription(), recipeSteps.getVideoURL(), recipeSteps.getThumbnailURL());
+
         // Trigger the callback method and pass in the position that was clicked
-        mCallback.onRecipeStepDescriptionSelected(bakingStepID);
+        mCallback.onRecipeStepDescriptionSelected(bakingStepID, steplist);
     }
 }
