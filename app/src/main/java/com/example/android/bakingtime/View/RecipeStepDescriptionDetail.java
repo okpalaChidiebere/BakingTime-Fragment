@@ -46,6 +46,66 @@ public class RecipeStepDescriptionDetail extends AppCompatActivity {
                     .add(R.id.player_view_and_description_body, playerViewFragment)
                     .commit();
         }
+
+        // The "Next" button launches a new fragment with next steps
+        Button nextButton = (Button) findViewById(R.id.tv_next_step);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(currentListIndex < bakingStep.size()) {
+
+                    playerViewFragment = new FragmentRecipePlayerView();
+                    playerViewFragment.setRecipeStepsList(bakingStep);
+
+                    Log.e("Index before add", ""+currentListIndex);
+
+                    /*int nextIndex;
+                    if(currentListIndex < 0)
+                        nextIndex = 0;
+                    else
+                        nextIndex = currentListIndex++;*/
+
+                    int nextIndex = currentListIndex++;
+
+                    Log.e("Index after increment", ""+nextIndex);
+
+                    playerViewFragment.setListIndex(nextIndex);
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.player_view_and_description_body, playerViewFragment)
+                            .commit();
+                }
+            }
+        });
+
+        // The "previous" button launches a new AndroidMeActivity
+        Button previousButton = (Button) findViewById(R.id.tv_previous_step);
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(currentListIndex >= 0) {
+
+                    playerViewFragment = new FragmentRecipePlayerView();
+                    playerViewFragment.setRecipeStepsList(bakingStep);
+                    Log.e("Index before subtract", ""+currentListIndex);
+                    int previousIndex = currentListIndex--;
+                    Log.e("Index after subtract", ""+previousIndex);
+                    playerViewFragment.setListIndex(previousIndex);
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.player_view_and_description_body, playerViewFragment)
+                            .commit();
+                }
+            }
+        });
+
     }
+
+
 
 }
