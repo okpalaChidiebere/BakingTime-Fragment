@@ -8,20 +8,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.android.bakingtime.Model.BakingFood;
 import com.example.android.bakingtime.Model.BakingStep;
 import com.example.android.bakingtime.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeName extends AppCompatActivity implements RecipeNameMasterListFragment.OnRecipeStepDescriptionClickListener{
 
     public static final String BAKING_RECIPE_STEPS_LIST = "baking_recipe_steps_list";
     public static final String LIST_INDEX = "list_index";
+    private static final String EXTRA_FOOD_LIST = "BAKING_FOOD_LIST";
 
     private FragmentRecipePlayerView playerViewFragment;
     private List<BakingStep> bakingStep;
-    private int currentListIndex;
 
     // Track whether to display a two-pane or single-pane UI
     // A single-pane display refers to phone screens, and two-pane to larger tablet screens
@@ -32,6 +34,8 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_name);
+
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true); //back Button
 
         // Determine if you're creating a two-pane or single-pane display
         if(findViewById(R.id.android_me_linear_layout) != null) {
@@ -44,7 +48,8 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
 
                 // Create a new head BodyPartFragment
                 playerViewFragment = new FragmentRecipePlayerView();
-                bakingStep = (List<BakingStep>) getIntent().getSerializableExtra(BAKING_RECIPE_STEPS_LIST);
+                List<BakingFood> bakingFood = (List<BakingFood>) getIntent().getSerializableExtra(EXTRA_FOOD_LIST);
+                bakingStep = bakingFood.get(0).getSteps();
 
                 //Log.e(TAG, "Position clicked: "+ currentListIndex);
                 playerViewFragment.setRecipeStepsList(bakingStep);
@@ -74,12 +79,10 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
 
             // Create a new head BodyPartFragment
             playerViewFragment = new FragmentRecipePlayerView();
-            currentListIndex = getIntent().getIntExtra(LIST_INDEX, 0);
-            bakingStep = (List<BakingStep>) getIntent().getSerializableExtra(BAKING_RECIPE_STEPS_LIST);
 
             //Log.e(TAG, "Position clicked: "+ currentListIndex);
-            playerViewFragment.setRecipeStepsList(bakingStep);
-            playerViewFragment.setListIndex(currentListIndex);
+            playerViewFragment.setRecipeStepsList(recipeSteps);
+            playerViewFragment.setListIndex(position);
 
             // Add the fragment to its container using a FragmentManager and a Transaction
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -87,7 +90,6 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
             fragmentManager.beginTransaction()
                     .add(R.id.player_view_and_description_body, playerViewFragment)
                     .commit();
-
 
         }else {
 
@@ -101,5 +103,10 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
 
             startActivity(intent);
         }
+    }
+
+    public List<BakingFood> getBakingFoodData() {
+
+        return (List<BakingFood>) getIntent().getSerializableExtra(EXTRA_FOOD_LIST);
     }
 }
