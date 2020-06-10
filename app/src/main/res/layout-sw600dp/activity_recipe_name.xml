@@ -12,8 +12,9 @@
     <fragment
         android:id="@+id/master_list_fragment"
         android:name="com.example.android.bakingtime.View.RecipeNameMasterListFragment"
-        android:layout_width="400dp"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
     <!-- A small divider -->
     <View
@@ -24,7 +25,8 @@
     <!-- LinearLayout that arranges all three Android-Me body part images vertically -->
     <LinearLayout
         android:id="@+id/android_me_linear_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@android:color/white"

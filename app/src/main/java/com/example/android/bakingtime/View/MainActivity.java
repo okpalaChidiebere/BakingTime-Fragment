@@ -1,6 +1,7 @@
 package com.example.android.bakingtime.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -44,8 +45,14 @@ public class MainActivity extends AppCompatActivity implements BakingFoodTagAdap
 
         mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
+        boolean tabletSize = getResources().getBoolean(R.bool.isTablet);
+        if (tabletSize) {
+            // use a Grid layout manager
+            layoutManager = new GridLayoutManager(this, 3);
+        } else {
+            // use a linear layout manager
+            layoutManager = new LinearLayoutManager(this);
+        }
         mRecyclerView.setLayoutManager(layoutManager);
 
         context = this;

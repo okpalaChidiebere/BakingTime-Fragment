@@ -88,7 +88,7 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
             FragmentManager fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
-                    .add(R.id.player_view_and_description_body, playerViewFragment)
+                    .replace(R.id.player_view_and_description_body, playerViewFragment)
                     .commit();
 
         }else {
