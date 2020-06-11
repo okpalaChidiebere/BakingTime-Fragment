@@ -8,4 +8,6 @@
     <string name="MediaPlayer">Media Player</string>
     <string name="RecipeInstruction">Recipe Step Instruction</string>
     <string name="nav_step">Navigation Step</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

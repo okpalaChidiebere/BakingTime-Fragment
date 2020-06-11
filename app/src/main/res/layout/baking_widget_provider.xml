@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tv_widget_ingredient_list"
+    android:orientation="vertical"
+    android:background="@color/icons">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp">
+
+        <TextView
+            android:id="@+id/widget_ingredient_title"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:gravity="left"
+            android:fontFamily="sans-serif-medium"
+            android:text="Nutella Pie"
+            android:textAllCaps="true"
+            android:textColor="@color/icons"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:gravity="left"
+        android:fontFamily="sans-serif-medium"
+        android:text="Nutella Pie"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="20sp" />
+
+
+</LinearLayout>
