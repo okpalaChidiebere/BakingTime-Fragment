@@ -7,7 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.example.android.bakingtime.Model.BakingFood;
+import com.example.android.bakingtime.Utils.BakingFoodDataService;
 import com.example.android.bakingtime.View.MainActivity;
+import com.example.android.bakingtime.View.RecipeName;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
@@ -15,13 +21,17 @@ import com.example.android.bakingtime.View.MainActivity;
 public class BakingWidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+                                List<BakingFood> bakingFood, int appWidgetId) {
 
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, RecipeName.class);
+        intent.putExtra(RecipeName.EXTRA_FOOD_LIST, (Serializable) bakingFood);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_provider);
+
+        // Update widget text title
+        views.setTextViewText(R.id.widget_ingredient_title, bakingFood.get(0).getName());
 
         // Widgets allow click handlers to only launch pending intents
         views.setOnClickPendingIntent(R.id.tv_widget_ingredient_list, pendingIntent);
@@ -32,9 +42,15 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        BakingFoodDataService.startActionUpdateBakingWidgets(context);
+    }
+
+    //we call this in the service to update all app widgets
+    public static void updateBakingFoodWidgets(Context context, AppWidgetManager appWidgetManager,
+                                          List<BakingFood> bakingFood, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+            updateAppWidget(context, appWidgetManager, bakingFood, appWidgetId);
         }
     }
 

@@ -25,15 +25,14 @@
             android:textSize="17sp" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:gravity="left"
-        android:fontFamily="sans-serif-medium"
-        android:text="Nutella Pie"
-        android:textAllCaps="true"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="20sp" />
+    <!--To be used with RemoteViewBinder -->
+    <!--<ListView
+        android:id="@+id/widget_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"
+        />-->
 
 
 </LinearLayout>

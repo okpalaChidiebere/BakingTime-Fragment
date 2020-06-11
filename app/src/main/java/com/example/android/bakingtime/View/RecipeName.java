@@ -20,7 +20,7 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
 
     public static final String BAKING_RECIPE_STEPS_LIST = "baking_recipe_steps_list";
     public static final String LIST_INDEX = "list_index";
-    private static final String EXTRA_FOOD_LIST = "BAKING_FOOD_LIST";
+    public static final String EXTRA_FOOD_LIST = "BAKING_FOOD_LIST";
 
     private FragmentRecipePlayerView playerViewFragment;
     private List<BakingStep> bakingStep;

@@ -21,6 +21,9 @@
                 android:resource="@xml/baking_widget_provider_info" />
         </receiver>
 
+        <!--This is required for immediate update of widget on app download-->
+        <service android:name=".Utils.BakingFoodDataService" />
+
         <activity
             android:name=".View.RecipeName"
             android:launchMode="singleTop"
