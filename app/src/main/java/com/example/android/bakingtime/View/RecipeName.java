@@ -22,6 +22,10 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
     public static final String LIST_INDEX = "list_index";
     public static final String EXTRA_FOOD_LIST = "BAKING_FOOD_LIST";
 
+    /*Keys used for widgets*/
+    public static final String EXTRA_FOOD_LIST_INGREDIENT = "BAKING_FOOD_LIST_INGREDIENT";
+    public static final String BUNDLE_FOOD_LIST_INGREDIENT = "BUNDLE_FOOD_LIST_INGREDIENT";
+
     private FragmentRecipePlayerView playerViewFragment;
     private List<BakingStep> bakingStep;
 
