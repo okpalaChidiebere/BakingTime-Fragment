@@ -33,22 +33,6 @@ public class BakingFoodTagAdapter extends RecyclerView.Adapter<BakingFoodTagAdap
         this.mClickHandler = clickHandler;
     }
 
-    public void setAdapter(List<BakingFood> data) {
-        this.bakingFood = data;
-        //notifyDataSetChanged();
-    }
-
-    /*public void clear() {
-        int size = bakingFood.size();
-        if (size > 0) {
-            for (int i = 0; i < size; i++) {
-                bakingFood.remove(0);
-            }
-
-            notifyItemRangeRemoved(0, size);
-        }
-    }*/
-
     public class BakingFoodTagAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public final TextView mFoodTag;

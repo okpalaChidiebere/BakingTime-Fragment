@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements BakingFoodTagAdap
     public void onClick(BakingFood foodTagName) {
 
         int foodID = foodTagName.getId() - 1; //minus 1 because the index list starts from 0
-        //Log.e("BakingAppRecipeTag", list.get(foodID).toString());
 
         List<BakingFood> tempList = new ArrayList<>();
         tempList.add(list.get(foodID));
@@ -90,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements BakingFoodTagAdap
         Context context = this;
         Class destinationClass = RecipeName.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        //intentToStartDetailActivity.putExtra(EXTRA_FOOD_TAG_ID, foodID);
         intentToStartDetailActivity.putExtra(EXTRA_FOOD_LIST, (Serializable) tempList);
         startActivity(intentToStartDetailActivity);
     }

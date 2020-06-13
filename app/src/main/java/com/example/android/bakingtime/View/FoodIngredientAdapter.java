@@ -22,10 +22,6 @@ public class FoodIngredientAdapter extends RecyclerView.Adapter<FoodIngredientAd
         this.mIngredients = ingredients;
     }
 
-    /*public void setAdapter(List<Ingredients> data) {
-        this.mIngredients = data;
-    }*/
-
     public class FoodIngredientAdapterViewHolder extends RecyclerView.ViewHolder{
         public final TextView mFoodIngredient;
         public final TextView mFoodMeasurement;

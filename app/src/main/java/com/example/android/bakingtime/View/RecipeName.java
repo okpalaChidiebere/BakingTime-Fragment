@@ -45,7 +45,6 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
         if(findViewById(R.id.android_me_linear_layout) != null) {
             // This LinearLayout will only initially exist in the two-pane tablet case
 
-            Log.e("DoublePane", "yes");
             mTwoPane = true;
 
             if(savedInstanceState == null) {
@@ -68,7 +67,6 @@ public class RecipeName extends AppCompatActivity implements RecipeNameMasterLis
         }else {
             // We're in single-pane mode and displaying fragments on a phone in separate activities
             mTwoPane = false;
-            Log.e("DoublePane", "No");
         }
     }
 

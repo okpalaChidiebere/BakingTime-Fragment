@@ -67,7 +67,7 @@ public class RecipeNameMasterListFragment extends Fragment implements RecipeStep
     }
 
     /**
-     * Inflates the fragment layout file and sets the correct resource for the image to display
+     * Inflates the fragment layout file and sets the correct resource for the baking ingredients and short step instruction to display
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

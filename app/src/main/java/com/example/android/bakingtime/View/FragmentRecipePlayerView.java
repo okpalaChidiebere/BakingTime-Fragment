@@ -81,7 +81,7 @@ public class FragmentRecipePlayerView extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the Android-Me fragment layout
+        // Inflate the FragmentRecipePlayerView fragment layout
 
         if (savedInstanceState != null) {
             mResumeWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW);

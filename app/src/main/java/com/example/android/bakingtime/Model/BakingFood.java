@@ -13,15 +13,6 @@ public class BakingFood implements Serializable {
     private int servings;
     private String image;
 
-    /*public BakingFood(int id, String name, List<Ingredients> ingredients, List<Steps> steps, int servings, String image) {
-        this.id = id;
-        this.name = name;
-        this.ingredients = ingredients;
-        this.steps = steps;
-        this.servings = servings;
-        this.image = image;
-    }*/
-
     public int getId() {
         return id;
     }

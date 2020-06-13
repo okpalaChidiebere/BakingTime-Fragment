@@ -28,16 +28,7 @@ public class RecipeStepAdapter extends RecyclerView.Adapter<RecipeStepAdapter.Re
         this.mClickHandler = clickHandler;
     }
 
-    /*public RecipeStepAdapter(List<BakingStep> steps){
-        this.mSteps = steps;
-    }*/
-
-    /*public void setAdapter(List<Steps> data){
-        this.mSteps = data;
-    }*/
-
     public class RecipeStepAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    //public class RecipeStepAdapterViewHolder extends RecyclerView.ViewHolder{
         public final TextView mRecipeSteps;
 
         public RecipeStepAdapterViewHolder(View view){
